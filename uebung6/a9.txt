@@ -1,0 +1,10 @@
+2 * 3 + 4 = 50 * 51 + 52 = 2602
+
+2602 mod 256 = 42   // 255!
+
+42 = *
+
+Auf dem Bildschirm wird "*34" ausgegeben
+
+
+falsch

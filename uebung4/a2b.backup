@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main (){
+
+	double zahl1 = 0;
+	double zahl2 = 0;
+
+	double summe = 0;
+	double nkomma = 0;
+
+	double tolleranz = 0.000001;
+	
+	//Eingabe der Zahlen durch den Benutzer
+
+	printf("\nGeben Sie eine Zahl ein: ");
+	scanf("%lf", &zahl1);
+	
+	printf("\nGeben Sie noch eine Zahl ein: ");
+	scanf("%lf", &zahl2);
+
+	//Berechnung der Summe
+
+	summe = zahl1 * zahl2;
+	
+	printf("\nDie Summe beider Zahlen ist ");
+
+
+	//berechnung der Nachkommastellen	
+
+	nkomma = (summe - ((int)summe))*1000;
+	
+
+	printf("nkomma = %lf\n",nkomma);
+
+	if (nkomma < tolleranz){
+
+		printf("%d.\n", (int) summe);
+
+	
+	} else if (nkomma/10 < 0) {
+	
+		printf("%.1lf\n", summe);
+
+	} else if (nkomma >= 10 && nkomma < 100) {
+	
+		printf("%.2lf\n", summe);
+	
+	} else if (nkomma >=100 && nkomma < 1000){
+		
+		printf("%.3lf\n", summe);
+	
+	} else {
+	
+		printf("%lf\n", summe);
+		printf("Fallback triggered\n");
+	}
+
+
+}
