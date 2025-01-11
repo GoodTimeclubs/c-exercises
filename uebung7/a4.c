@@ -1,55 +1,18 @@
 #include <stdio.h>
-int eingabeEinlesen(){
+double eingabeEinlesen(){
     double eingabe = 0.0;
     printf("Wie groß ist der Euro-Betrag, welcher in moeglichst wenig Muenzen aufgeteilt werden soll? ");
     scanf("%lf", &eingabe);
-    return (int)(eingabe);
+    return eingabe;
 }
 
-
-void numberToString(int anzahl){
-    char eins[sizeof(char)*5] = {"E","i","n","e",'\0'};
-    char zwei[sizeof(char)*5] = {"Z","w","e","i",'\0'};
-    char drei[sizeof(char)*5] = {"D","r","e","i",'\0'};
-    char vier[sizeof(char)*5] = {"V","i","e","r",'\0'};
-    char fuenf[sizeof(char)*6] = {"F","u","e","n","f",'\0'};
-
-    if(anzahl == 1)
-    {
-        printf("%s",eins);
-    }
-    if(anzahl == 2)
-    {
-        printf("%s",zwei);
-    }
-    if(anzahl == 3)
-    {
-        printf("%s",drei);
-    }
-    if(anzahl == 4)
-    {
-        printf("%s",vier);
-    }
-    if(anzahl == 5)
-    {
-        printf("%s",fuenf);
-    }
-}
 
 void EuroMuenze(int anzahl, int muenze){
-    if (anzahl)
-    {
-        numberToString(anzahl);
-        printf(" x %i-Euro-Muenze\n", anzahl, muenze/100);
-    }
+        printf("%i x %i-Euro-Muenze\n", anzahl, muenze/100);
 }
 
 void CentMuenze(int anzahl, int muenze){
-    if (anzahl)
-    {
-        numberToString(anzahl);
-        printf("x %i-Cent-Muenze\n", anzahl, muenze);
-    }
+        printf("%i x %i-Cent-Muenze\n", anzahl, muenze);
 }
 
 int anzahlBerechen(int* muenzen, double eingabe, int i){
