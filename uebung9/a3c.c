@@ -12,11 +12,11 @@ struct Vektor
 struct Vektor getVektor()
 {
     struct Vektor eingabe;
-    printf("Bitte geben sie den Wert des Vektors für x ein:");
+    printf("Bitte geben sie den Wert des Vektors für x ein: ");
     eingabe.x = readint();
-    printf("Bitte geben sie den Wert des Vektors für y ein:");
+    printf("Bitte geben sie den Wert des Vektors für y ein: ");
     eingabe.y = readint();
-    printf("Bitte geben sie den Wert des Vektors für z ein:");
+    printf("Bitte geben sie den Wert des Vektors für z ein: ");
     eingabe.z = readint();
 
     return eingabe;
