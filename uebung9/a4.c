@@ -11,33 +11,27 @@ struct Person
     int Geschlecht;
 };
 
-struct Person getPerson()
+void getPerson(struct Person* Input, int i)
 {
-    struct Person Input;
-
-    Input.Vorname = malloc(sizeof(char)*20);
-    Input.Nachname = malloc(sizeof(char)*20);
-    Input.Vorname[0] = '\0';
-    Input.Nachname[0] = '\0';
-    Input.Alter = 0;
-    Input.Geschlecht = 0;
+    Input[i].Vorname = malloc(sizeof(char)*20);
+    Input[i].Nachname = malloc(sizeof(char)*20);
+    Input[i].Vorname = 0;
+    Input[i].Nachname = 0;
     
     printf("Bitte geben Sie den Vornamen ein:\n");
-    Input.Vorname = readtext();
-    printf("Bitte geben Sie den Nachnamen von %s ein:\n", Input.Vorname);
-    Input.Nachname = readtext();
+    Input[i].Vorname = readtext();
+    printf("Bitte geben Sie den Nachnamen von %s ein:\n", Input[i].Vorname);
+    Input[i].Nachname = readtext();
     
     do
     {
-        printf("Bitte geben Sie das Geschlecht von %s %s ein [1 Männlich | 2 Weiblich]:\n", Input.Vorname, Input.Nachname);
-        Input.Geschlecht = readint();
-    } while (Input.Geschlecht == 0 || Input.Geschlecht >= 3);
+        printf("Bitte geben Sie das Geschlecht von %s %s ein [1 Männlich | 2 Weiblich]:\n", Input[i].Vorname, Input[i].Nachname);
+        Input[i].Geschlecht = readint();
+    } while (Input[i].Geschlecht == 0 || Input[i].Geschlecht >= 3);
     
     
-    printf("Bitte geben Sie das Alter von %s %s ein:\n", Input.Vorname, Input.Nachname);
-    Input.Alter = readint();
-    
-    return Input;
+    printf("Bitte geben Sie das Alter von %s %s ein:\n", Input[i].Vorname, Input[i].Nachname);
+    Input[i].Alter = readint();
 }
 
 void printPerson(struct Person Input){
@@ -49,15 +43,39 @@ void printPerson(struct Person Input){
 
 void newPerson(struct Person* Adressbuch, int size){
     int i = 0;
-    for(i=0;i<size; i++)
+    int i2 = 0;
+    int freeSpot = -1;
+    while(freeSpot == -1)
     {
-        if(&Adressbuch[i].Vorname == '\0');
+        if(i == size)
+        {
+            size = size + 10;
+            Adressbuch = realloc(Adressbuch, size*sizeof(struct Person));
+            
+            for(i2=0;i<10;i++)
+            {
+            Adressbuch[i+i2].Vorname = 0;
+            Adressbuch[i+i2].Nachname = 0;
+            Adressbuch[i+i2].Alter = 0;
+            Adressbuch[i+i2].Geschlecht = 0;
+            }
+        }
+
+        if(Adressbuch[i].Vorname == 0 && Adressbuch[i].Nachname == 0)
+        {
+            freeSpot = i;
+        }
     }
+
+    getPerson(Adressbuch,freeSpot);
+    printPerson(Adressbuch[freeSpot]);
+
+
 }
 
 int main (){
-    unsigned int adressbuchSize = 1;
-    struct Person* Adressbuch = malloc(adressbuchSize);
+    int adressbuchSize = 1;
+    struct Person* Adressbuch = malloc(sizeof(struct Person)*adressbuchSize);
     
     newPerson(Adressbuch, adressbuchSize);
     
