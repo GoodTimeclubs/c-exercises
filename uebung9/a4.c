@@ -116,7 +116,7 @@ int main (){
     printf("\nWillkommen im temporaeren Adressbuch!\n\n");
     printf("Bitte treffen sie eine Auswahl\n");
     printf("[1] Neue Person Anlegen\n");
-    printf("[2] Person Suchen\n");
+    printf("[2] Person Suchen\n"); //TODO läuft in segmentation fault
     printf("[3] Person löschen\n");
     printf("[0] Program verlassen\n");
 
