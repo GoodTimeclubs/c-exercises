@@ -5,14 +5,14 @@
 
 struct Person
 {
-    char* Vorname;
-    char* Nachname;
+    char *Vorname;
+    char *Nachname;
     int Alter;
     int Geschlecht;
 };
 
-void getPerson(struct Person* Input, int i)
-{
+void getPerson(struct Person *Input, int i)
+{   
     printf("Bitte geben Sie den Vornamen ein:\n");
     Input[i].Vorname = readtext();
     printf("Bitte geben Sie den Nachnamen von %s ein:\n", Input[i].Vorname);
@@ -23,74 +23,61 @@ void getPerson(struct Person* Input, int i)
     Input[i].Alter = readint();
 }
 
-void printPerson(struct Person Input){
-    if (Input.Geschlecht == 0) printf("[Kein Geschlecht angegeben]");
-    else 
+void printPerson(struct Person Input)
+{
+    if (Input.Geschlecht == 0)
+        printf("[Kein Geschlecht angegeben]");
+    else
     {
-        if (Input.Geschlecht == 1) printf("Herr ");
-        if (Input.Geschlecht == 2) printf("Frau ");
+        if (Input.Geschlecht == 1)
+            printf("Herr ");
+        if (Input.Geschlecht == 2)
+            printf("Frau ");
     }
-    if (Input.Vorname[0] == '\0') printf("[Kein Vorname angegeben]");
-    else printf("%s ", Input.Vorname);
-    if (Input.Nachname[0] == '\0') printf("[Kein Nachname angegeben]");
-    else printf("%s ", Input.Nachname);
-    if (Input.Alter == 0) printf("[Kein Alter angegeben]");
-    else printf("(%d) ", Input.Alter);
-    
+    if (Input.Vorname[0] == '\0')
+        printf("[Kein Vorname angegeben]");
+    else
+        printf("%s ", Input.Vorname);
+    if (Input.Nachname[0] == '\0')
+        printf("[Kein Nachname angegeben]");
+    else
+        printf("%s ", Input.Nachname);
+    if (Input.Alter == 0)
+        printf("[Kein Alter angegeben]");
+    else
+        printf("(%d) ", Input.Alter);
 
     printf("\n");
 }
 
-void newPerson(struct Person* Adressbuch, int* size){
-    int i = 0;
+void newPerson(struct Person *Adressbuch, int *size)
+{
+    int i = 1;
     int i2 = 0;
     int freeSpot = -1;
-    while(freeSpot == -1)
+    printf("DEBUG - newPerson - *size = %d\n", *size);
+    while (freeSpot == -1)
     {
-        if(i == *size)
-        {
-            *size = *size + 10;
-            Adressbuch = realloc(Adressbuch, *size*sizeof(struct Person));
-            
-            for(i2=0;i<10;i++)
-            {
-            Adressbuch[i+i2].Vorname[0] = '\0';
-            Adressbuch[i+i2].Nachname[0] = '\0';
-            Adressbuch[i+i2].Alter = 0;
-            Adressbuch[i+i2].Geschlecht = 0;
-            }
-        }
 
-        if(Adressbuch[i].Vorname == 0 && Adressbuch[i].Nachname == 0)
+        if (Adressbuch[i].Vorname == NULL && Adressbuch[i].Nachname == NULL)
         {
             freeSpot = i;
         }
+        i++;
     }
 
-    getPerson(Adressbuch,freeSpot);
+    getPerson(Adressbuch, freeSpot);
     printPerson(Adressbuch[freeSpot]);
-
-
 }
 
-int searchPerson(struct Person* Adressbuch, int* size)
+int searchPerson(struct Person *Adressbuch, int *size)
 {
-    printf("Bitte geben sie den Vornamen der gesuchten Person ein:\n");
-    char* vorname = readtext();
-    printf("Bitte geben sie den Vornamen der gesuchten Person ein:\n");
-    char* nachname = readtext();
-    int result = -1;
-    int i = 0;
-    for(i=0;i<*size;i++)
-    {
-        if(Adressbuch[i].Vorname == vorname && Adressbuch[i].Nachname == nachname) result = i;
-    }
-    free(vorname);
-    free(nachname);
+    printf("An welchem Speicherplatz ist die gewünschte Person gespeichert?\n");
+    int result = readint();
     return result;
 }
 
-void delPerson(struct Person* Adressbuch, int* size)
+void delPerson(struct Person *Adressbuch, int *size)
 {
     int i = -1;
     printf("Welche Person soll gelöscht werden?\n\n");
@@ -101,30 +88,70 @@ void delPerson(struct Person* Adressbuch, int* size)
     Adressbuch[i].Alter = 0;
     Adressbuch[i].Geschlecht = 0;
 
-    printf("Die Person an dem %d. Speicherplatz wurde gelöscht.\n",i);
+    printf("Die Person an dem %d. Speicherplatz wurde gelöscht.\n", i);
 }
 
+void printTable(struct Person *Adressbuch, int *size)
+{
+    int i = 1;
 
+    printf("Das Adressbuch hat aktuell die folgenden Einträge:");
 
-int main (){
-    int adressbuchSize = 1;
+    while (Adressbuch[i].Vorname != NULL && Adressbuch[i].Nachname != NULL)
+    {
+        printf("%d : ", i);
+        printPerson(Adressbuch[i]);
+        i++;
+    }
+}
+
+void compAge(struct Person *Adressbuch, int *size)
+{
+    printf("An welchem Speicherplatz ist die 1. Person?");
+    int person1 = readint();
+
+    printf("An welchem Speicherplatz ist die 2. Person?");
+    int person2 = readint();
+
+    if(Adressbuch[person1].Alter > Adressbuch[person2].Alter )
+    {
+        printf("%s %s ist mit einem Alter von %d %d Jahre aelter als %s %s mit dem Alter %d", Adressbuch[person1].Vorname, Adressbuch[person1].Nachname , Adressbuch[person1].Alter , Adressbuch[person1].Alter - Adressbuch[person2].Alter, Adressbuch[person2].Vorname, Adressbuch[person2].Nachname, Adressbuch[person2].Alter);
+    }
+
+    if(Adressbuch[person1].Alter < Adressbuch[person2].Alter )
+    {
+        printf("%s %s ist mit einem Alter von %d %d Jahre juenger als %s %s mit dem Alter %d", Adressbuch[person1].Vorname, Adressbuch[person1].Nachname , Adressbuch[person1].Alter , Adressbuch[person1].Alter - Adressbuch[person2].Alter, Adressbuch[person2].Vorname, Adressbuch[person2].Nachname, Adressbuch[person2].Alter);
+    }
+    if(Adressbuch[person1].Alter == Adressbuch[person2].Alter )
+    {
+        printf("Die Personen haben das gleiche Alter.");
+    }
+
+}
+
+int main()
+{
+    int adressbuchSize = 100;
     int choice = 0;
-    struct Person* Adressbuch = malloc(sizeof(struct Person)*adressbuchSize);
-    
+    struct Person *Adressbuch = malloc(sizeof(struct Person) * adressbuchSize);
+
     do
     {
-    printf("\nWillkommen im temporaeren Adressbuch!\n\n");
-    printf("Bitte treffen sie eine Auswahl\n");
-    printf("[1] Neue Person Anlegen\n");
-    printf("[2] Person Suchen\n"); //TODO läuft in segmentation fault
-    printf("[3] Person löschen\n");
-    printf("[0] Program verlassen\n");
+        printf("\nWillkommen im temporaeren Adressbuch!\n\n");
+        printf("Bitte treffen sie eine Auswahl\n");
+        printf("[1] Neue Person Anlegen\n");
+        printf("[2] Person Suchen\n"); 
+        printf("[3] Person löschen\n");
+        printf("[4] Alter von Personen vergleichen\n");
+        printf("[5] Adressbuch ausgeben\n");
+        printf("[0] Program verlassen\n");
 
-    choice = readint();
+        choice = readint();
 
-    if (choice == 1) newPerson(Adressbuch, &adressbuchSize);
-    if (choice == 2) printPerson(Adressbuch[searchPerson(Adressbuch, &adressbuchSize)]);
-    if (choice == 3) delPerson(Adressbuch, &adressbuchSize);
+        if (choice == 1) newPerson(Adressbuch, &adressbuchSize);
+        if (choice == 2) printPerson(Adressbuch[searchPerson(Adressbuch, &adressbuchSize)]);
+        if (choice == 3) delPerson(Adressbuch, &adressbuchSize);
+        if (choice == 4) compAge(Adressbuch, &adressbuchSize);
+        if (choice == 5) printTable(Adressbuch, &adressbuchSize);
     } while (choice != 0);
-    
 }
