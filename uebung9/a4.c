@@ -171,15 +171,10 @@ int main()
 
         choice = readint();
 
-        if (choice == 1)
-            newPerson(Adressbuch, &adressbuchSize);
-        if (choice == 2)
-            printPerson(Adressbuch[searchPerson(Adressbuch, &adressbuchSize)]);
-        if (choice == 3)
-            delPerson(Adressbuch, &adressbuchSize);
-        if (choice == 4)
-            compAge(Adressbuch, &adressbuchSize);
-        if (choice == 5)
-            printTable(Adressbuch, adressbuchSize);
+        if (choice == 1) newPerson(Adressbuch, &adressbuchSize);
+        if (choice == 2) printPerson(Adressbuch[searchPerson(Adressbuch, &adressbuchSize)]);
+        if (choice == 3) delPerson(Adressbuch, &adressbuchSize);
+        if (choice == 4) compAge(Adressbuch, &adressbuchSize);
+        if (choice == 5) printTable(Adressbuch, adressbuchSize);
     } while (choice != 0);
 }
