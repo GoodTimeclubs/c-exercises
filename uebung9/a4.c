@@ -39,7 +39,7 @@ void printPerson(struct Person Input)
     {
         printf("[Kein Vorname angegeben]");
     }
-    else if (Input.Vorname[0] = '\0')
+    else if (Input.Vorname[0] == '\0')
     {
         printf("[Kein Vorname angegeben]");
     }
