@@ -52,6 +52,7 @@ void delKnoten(struct Knoten* anfang , int count)
     {
         anfang = anfang->nachfolger;
     }
+    printf("Knoten NR. %d gefunden.", anfang.inhalt);
     
 }
 
