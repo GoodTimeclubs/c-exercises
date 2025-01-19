@@ -9,7 +9,7 @@ struct Knoten
     struct Knoten * nachfolger;
 };
 
-struct Knoten* insert_b(struct Knoten* anfang, int i)
+struct Knoten* insert_b(struct Knoten* anfang, int i)//fügt einen Knoten am Anfang der Liste ein
 {
     struct Knoten* new = malloc(sizeof(struct Knoten));
     new->nachfolger = anfang;
@@ -18,43 +18,99 @@ struct Knoten* insert_b(struct Knoten* anfang, int i)
     return new;
 }
 
-void printKnoten(struct Knoten* anfang)
+int countKnoten(struct Knoten* anfang, int inhalt)//zählt zusammenhängende Knoten
 {
     if (anfang->nachfolger != NULL)
     {
-        printKnoten(anfang->nachfolger);
+        inhalt = countKnoten(anfang->nachfolger, inhalt);
     }
-    printf("%d\n", anfang->inhalt);
+    inhalt = inhalt +1;
+    return inhalt;
 }
 
-int countKnoten(struct Knoten* anfang, int count)
+void printList(struct Knoten* anfang, int size) //gibt zusammenhängende Knoten aus
 {
+    printf("Knoten nr. %d mit dem Inhalt %d\n",size - countKnoten(anfang, 0), anfang->inhalt);
     if (anfang->nachfolger != NULL)
-    {
-        count = countKnoten(anfang->nachfolger, count);
+    {   
+        printList(anfang->nachfolger, size);
     }
-    count = count +1;
-    return count;
+    
+
 }
 
-void delKnoten(struct Knoten* anfang , int count)
+struct Knoten* delKnoten(struct Knoten* anfang , int count) //löscht einen angegebenen Knoten
 {
     int eingabe = 0;
+    int i = 0;
+    struct Knoten* todelete;
+    struct Knoten* out;
+
+    out = anfang;
+
     do
     {
         printf("Welcher Knoten soll gelöscht werden?\n");
         eingabe = readint();
     } while (eingabe > count);
     
-    int i = 0;
-    
-    for (i = 0; i<count; i++)
+    for (i = 0; i<eingabe; i++)
     {
+        if(eingabe == 0) //wenn der erste Knoten betroffen ist
+        {
+            todelete = anfang;
+            if (anfang->nachfolger != NULL)
+            {
+                out = anfang->nachfolger;
+            }
+            
+        }
+        else if(eingabe-1 == i) //bei restlichen Knoten
+        {
+            todelete = anfang->nachfolger;
+            anfang->nachfolger = anfang->nachfolger->nachfolger;
+        }
+        else if (anfang->nachfolger != NULL)
+        {
         anfang = anfang->nachfolger;
+        }
+        ;
     }
-    printf("Knoten NR. %d gefunden.", anfang.inhalt);
-    
+
+    free(todelete); //ToDo schlägt bei erstem Knoten fehl 
+    return out;
 }
+
+//Todo fix function
+struct Knoten getKnoten(struct Knoten* anfang , int count, int eingabe) //gibt den knoten an der Stelle von Eingeben
+{
+    int i = 0;
+    struct Knoten out;
+    
+    for (i = 0; i<eingabe; i++)
+    {
+        if(eingabe == 0) //wenn der erste Knoten betroffen ist
+        {
+            if (anfang->nachfolger != NULL)
+            {
+                out.nachfolger = anfang->nachfolger;
+                out.inhalt = anfang->inhalt;
+            }
+            
+        }
+        else if(eingabe == i) //bei restlichen Knoten
+        {
+            out.nachfolger = anfang->nachfolger;
+            out.inhalt = anfang->inhalt;
+        }
+        else if (anfang->nachfolger != NULL)
+        {
+        anfang = anfang->nachfolger;
+        }
+    }
+    return out;
+}
+
 
 int main ()
 {
@@ -65,7 +121,13 @@ int main ()
     anfang = insert_b(anfang, 4);
     anfang = insert_b(anfang, 5);
 
-    printKnoten(anfang);
-    delKnoten(anfang, countKnoten(anfang, 0));
+    printList(anfang, countKnoten(anfang, 0));
+    anfang = delKnoten(anfang, countKnoten(anfang, 0));
+    printList(anfang, countKnoten(anfang, 0));
+
+    printf("Welcher Knoten soll ausgegeben werden?\n");
+    struct Knoten test = getKnoten(anfang, countKnoten(anfang, 0), readint());
+    printf("Der Knoten hat den Inhalt %d und den Nachfolger %p\n", test.inhalt, test.nachfolger);
+
 
 }
