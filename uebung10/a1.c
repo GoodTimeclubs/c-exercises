@@ -98,7 +98,7 @@ struct Knoten getKnoten(struct Knoten* anfang , int count, int eingabe) //gibt d
             }
             
         }
-        else if(eingabe == i) //bei restlichen Knoten
+        else if((eingabe) == i) //bei restlichen Knoten
         {
             out.nachfolger = anfang->nachfolger;
             out.inhalt = anfang->inhalt;
@@ -126,7 +126,7 @@ int main ()
     printList(anfang, countKnoten(anfang, 0));
 
     printf("Welcher Knoten soll ausgegeben werden?\n");
-    struct Knoten test = getKnoten(anfang, countKnoten(anfang, 0), readint());
+    struct Knoten test = getKnoten(anfang, countKnoten(anfang, 0), readint());// Noch nicht funktional
     printf("Der Knoten hat den Inhalt %d und den Nachfolger %p\n", test.inhalt, test.nachfolger);
 
 
