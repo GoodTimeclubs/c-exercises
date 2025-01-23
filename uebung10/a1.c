@@ -81,27 +81,27 @@ struct Knoten* delKnoten(struct Knoten* anfang , int count) //löscht einen ange
     return out;
 }
 
-//Todo fix function
-struct Knoten getKnoten(struct Knoten* anfang , int count, int eingabe) //gibt den knoten an der Stelle von Eingeben
+
+struct Knoten* getKnoten(struct Knoten* anfang , int count, int eingabe) //gibt den knoten an der Stelle von Eingeben
 {
     int i = 0;
-    struct Knoten out;
+    struct Knoten* out;
     
-    for (i = 0; i<eingabe; i++)
+    for (i = 0; i<=eingabe; i++)
     {
         if(eingabe == 0) //wenn der erste Knoten betroffen ist
         {
             if (anfang->nachfolger != NULL)
             {
-                out.nachfolger = anfang->nachfolger;
-                out.inhalt = anfang->inhalt;
+                out->nachfolger = anfang->nachfolger;
+                out->inhalt = anfang->inhalt;
             }
             
         }
         else if((eingabe) == i) //bei restlichen Knoten
         {
-            out.nachfolger = anfang->nachfolger;
-            out.inhalt = anfang->inhalt;
+            out->nachfolger = anfang->nachfolger;
+            out->inhalt = anfang->inhalt;
         }
         else if (anfang->nachfolger != NULL)
         {
@@ -114,20 +114,40 @@ struct Knoten getKnoten(struct Knoten* anfang , int count, int eingabe) //gibt d
 
 int main ()
 {
+    //initialisierung
     struct Knoten* anfang = NULL;
+    int choice = -1;
     anfang = insert_b(anfang, 1);
     anfang = insert_b(anfang, 2);
     anfang = insert_b(anfang, 3);
     anfang = insert_b(anfang, 4);
     anfang = insert_b(anfang, 5);
 
-    printList(anfang, countKnoten(anfang, 0));
-    anfang = delKnoten(anfang, countKnoten(anfang, 0));
-    printList(anfang, countKnoten(anfang, 0));
+    while (choice != 0)
+    {
+        printf("\nWas möchten sie tun?\n\n");
+        printf("1 - linked List ausgeben\n");
+        printf("2 - Element am Anfang der Liste hinzufügen\n");
+        printf("3 - Knoten aus Liste löschen\n");
+        printf("4 - Inhalt eines Knotens ausgeben\n");
+        printf("0 - Programm verlassen\n");
+        choice = readint();
 
-    printf("Welcher Knoten soll ausgegeben werden?\n");
-    struct Knoten test = getKnoten(anfang, countKnoten(anfang, 0), readint());// Noch nicht funktional
-    printf("Der Knoten hat den Inhalt %d und den Nachfolger %p\n", test.inhalt, test.nachfolger);
-
+        if (choice == 0) return 0;
+        if (choice == 1) printList(anfang, countKnoten(anfang, 0));
+        if (choice == 2)
+        {
+            printf("Welcher ganzzahligen Inhalt soll der neue Knoten haben?");
+            anfang = insert_b(anfang, readint());
+        }
+        if (choice == 3) anfang = delKnoten(anfang, countKnoten(anfang, 0));
+        if (choice == 4) 
+        {
+            printf("Welcher Knoten soll ausgegeben werden?\n");
+            struct Knoten* test = getKnoten(anfang, countKnoten(anfang, 0), readint());
+            printf("Der Knoten hat den Inhalt %i und den Nachfolger %p\n", test->inhalt, test->nachfolger);
+        }
+    }
+    
 
 }
