@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 //einfach verkettete Liste
-struct Knoten 
+struct Element 
 {
     int zahl;
-    struct Knoten * next;
+    struct Element * next;
 };
 
 int main ()
@@ -13,19 +13,19 @@ int main ()
 
     anfang = &erster;
 
-    struct Knoten ende;
+    struct Element ende;
     ende.zahl = -12;
     ende.next = NULL;
 
-    struct Knoten vorletzter_knoten;
+    struct Element vorletzter_knoten;
     vorletzter_knoten.zahl = 7;
     vorletzter_knoten.next = &ende;
 
-    struct Knoten erster;
+    struct Element erster;
     erster.zahl = 42;
     erster.next = NULL;
 
-    struct Knoten zweiter;
+    struct Element zweiter;
     zweiter.zahl = 10;
     erster.next = &zweiter;
     zweiter.next = &vorletzter_knoten;

@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 //einfach verkettete Liste vorne anfügen
-struct Knoten 
+struct Element 
 {
     int zahl;
-    struct Knoten * next;
+    struct Element * next;
 };
 
-struct Knoten* einfügen(struct Knoten* anfang, int neue_zahl)
+struct Element* einfügen(struct Element* anfang, int neue_zahl)
 {
-    struct Knoten* neu = malloc (sizeof(struct Knoten));
+    struct Element* neu = malloc (sizeof(struct Element));
     neu -> zahl = neue_zahl;
     neu -> next = anfang;
     return neu;
 }
 
-void ausgabe (struct Knoten* iterator)
+void ausgabe (struct Element* iterator)
 {
     while (iterator != NULL)
     {
@@ -25,7 +25,7 @@ void ausgabe (struct Knoten* iterator)
 }
 int main ()
 {
-    struct Knoten* anfang = NULL;
+    struct Element* anfang = NULL;
     anfang = einfügen(anfang, 1);
     anfang = einfügen(anfang, 2);
     anfang = einfügen(anfang, 3);
