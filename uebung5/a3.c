@@ -47,7 +47,7 @@ int main (){
 	tilgung = annuitaet - zinsen;
 	
 
-	//Ausgabe des erszen Jahres
+	//Ausgabe des ersten Jahres
 	printf("%d\t%.2lf\t%.2lf\t\t%.2lf\t%.2lf\n", 1, restschuld, zinsen, tilgung, annuitaet);
 
 
