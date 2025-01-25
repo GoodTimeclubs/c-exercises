@@ -6,7 +6,7 @@ int main (){
 	double summe = 0;
 	double minEingabe = 0;
 	double maxEingabe = 0;
-
+ 
 	while (eingabe != 0){
 
 		printf("Bitte gebe eine Zahl ein (0 fuer Abbruch):");

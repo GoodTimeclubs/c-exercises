@@ -55,29 +55,29 @@ struct Element* delKnoten(struct Element* anfang , int count) //löscht einen an
     } while (eingabe > count);
     
     if(eingabe == 0) //wenn der erste Knoten betroffen ist
-        {
-            todelete = anfang;
-            
-            out = anfang->nachfolger;
-            
-            
-        }else{
-
-    for (i = 0; i<eingabe; i++)
     {
-        
-        if(eingabe-1 == i) //bei restlichen Knoten
+        todelete = anfang;
+            
+        out = anfang->nachfolger;
+            
+            
+    }else{
+
+        for (i = 0; i<eingabe; i++)
         {
-            todelete = anfang->nachfolger;
-            anfang->nachfolger = anfang->nachfolger->nachfolger;
+            
+            if(eingabe-1 == i) //bei restlichen Knoten
+            {
+                todelete = anfang->nachfolger;
+                anfang->nachfolger = anfang->nachfolger->nachfolger;
+            }
+            else if (anfang->nachfolger != NULL)
+            {
+            anfang = anfang->nachfolger;
+            }
+            ;
         }
-        else if (anfang->nachfolger != NULL)
-        {
-        anfang = anfang->nachfolger;
-        }
-        ;
     }
-        }
     free(todelete); //ToDo schlägt bei erstem Knoten fehl 
     return out;
 }
