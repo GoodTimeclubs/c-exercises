@@ -131,15 +131,22 @@ int main(int argc, char** argv){
 
     //einlesen des Passworts
     password = get_password();
-
+    printf("password = %s\n", password);
     //Datei verarbeiten und in output schreiben
     while((byte = fgetc(src)) != EOF)
     {
         if (password[pw_i] == '\0') pw_i = 0;
         
-        if(i_encrypt) byte = byte + password[pw_i];
-        if(i_decrypt) byte = byte - password[pw_i];
-
+        if(i_encrypt) 
+        {
+            printf("Byte getting encrypted...\n");
+            byte = byte + password[pw_i];
+        }
+        if(i_decrypt)
+        {
+            printf("Byte getting decrypted...\n");
+            byte = byte - password[pw_i];
+        }
         fputc (byte, dest);
         pw_i ++;
     }
