@@ -15,13 +15,12 @@ char* get_password(){
     char* pw2;
     tpw1=getpass("Bitte geben Sie das Passwort ein:");
 
-    printf("tpw1 = %s\n", tpw1);
 
     while(tpw1[pwlength] != '\0'){
         pwlength++;
     }
 
-    pw1 = malloc(pwlength*sizeof(char));
+    pw1 = malloc(pwlength+1*sizeof(char));
 
     i = 0;
     while(tpw1[i] != '\0'){
@@ -30,15 +29,13 @@ char* get_password(){
     }
     pw1[pwlength] = '\0';
 
-    printf("pw1 = %s\n", pw1);
-
     pw2=getpass("Bitte geben Sie das Passwort erneut ein:");
-    printf("pw2 = %s\n", pw2);
 
     i = 0;
     while(pw1[i] != '\0'){
         if(pw1[i] != pw2[i]){
             fputs("Die zwei Passwörter waren nicht Identisch!\n", stderr);
+            free(pw1);
             exit(10);
         }
         i++;
@@ -47,6 +44,7 @@ char* get_password(){
     while(pw2[i] != '\0'){
         if(pw1[i] != pw2[i]){
             fputs("Die zwei Passwörter waren nicht Identisch!\n", stderr);
+            free(pw1);
             exit(10);
         }
         i++;
@@ -94,7 +92,7 @@ int main(int argc, char** argv){
 
     //Input file
     if(argv[1] != argv[i_encrypt] && argv[1] != argv[i_decrypt] && argv[1] != argv[i_output]){
-        src = fopen("input.txt", "rb");
+        src = fopen(argv[1], "r");
         if(src == NULL)
         {
             fputs("Die Quelldatei konnte nicht geöffnet werden.\n", stderr);
@@ -118,38 +116,45 @@ int main(int argc, char** argv){
             return 7;
         }
         else if(i_output+1 < argc){//wenn Output Datei angegeben wurde
-            dest = fopen(argv[i_output+1],"wb"); //Parameter nach -o oder --output als Ausgabedatei einlesen
+            dest = fopen(argv[i_output+1],"w"); //Parameter nach -o oder --output als Ausgabedatei einlesen
             if(dest == NULL)
             {
                 fputs("Die Ausgabedatei konnte nicht geöffnet oder erstellt werden.\n", stderr);
                 fclose(src);
                 return 6;
             }
-        }
-        
+        }    
     }
 
     //einlesen des Passworts
     password = get_password();
-    printf("password = %s\n", password);
     //Datei verarbeiten und in output schreiben
     while((byte = fgetc(src)) != EOF)
     {
-        if (password[pw_i] == '\0') pw_i = 0;
+        if (password[pw_i] == '\0') {
+            pw_i = 0;
+            }
         
         if(i_encrypt) 
         {
-            printf("Byte getting encrypted...\n");
             byte = byte + password[pw_i];
         }
         if(i_decrypt)
         {
-            printf("Byte getting decrypted...\n");
             byte = byte - password[pw_i];
         }
         fputc (byte, dest);
         pw_i ++;
     }
+
+    //Ausgabe
+    if(i_encrypt){
+        printf("Die Verschlüsselung wurde abgeschlossen.\n");
+    }
+    else if(i_decrypt){
+        printf("Die Entschlüsselung wurde abgeschlossen.\n");
+    }
+
 
     free(password);
     fclose(src);
