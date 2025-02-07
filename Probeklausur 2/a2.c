@@ -28,12 +28,8 @@ char* trim (char* text){
         erstesZeichen = i;
         i++;
     }
-
-
-    printf("erstes: %d", erstesZeichen);
-    printf("letztes: %d", letztesZeichen);
     
-    for(i = 0; i<laenge; i++){
+    for(i = 0; i<=laenge; i++){
         ausgabe[i] = text[erstesZeichen+1+i];
     }
     ausgabe[i+1] = '\0';
@@ -42,7 +38,7 @@ char* trim (char* text){
 int main(){
     printf("Eingabe:");
     char* text = readtext();
-    printf("Sie gaben \"%s\" ein.", text);
+    printf("Sie gaben \"%s\" ein.\n", text);
     char* ausgabe = trim(text);
-    printf("Getrimmt: \"%s\"",ausgabe);
+    printf("Getrimmt: \"%s\"\n",ausgabe);
 }
